@@ -5,7 +5,7 @@ gem 'rails', '3.2.6'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mongoid', '3.0.1'
+gem 'mongoid', '2.4.9'
 gem 'bson_ext'
 
 gem 'twitter-bootstrap-rails'

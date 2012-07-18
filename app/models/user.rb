@@ -4,11 +4,11 @@ class User
   include Mongoid::Timestamps
 
   field :name, type: String
+  key :name
   field :email, type: String
   field :encrypted_password, type: String
   field :salt, type: String
   field :is_admin, type: Boolean, default: false
-  field :_id, type: String, default: ->{ name }
 
   validates_uniqueness_of :name, :message => 'was already taken.'
   validates_uniqueness_of :email, :message => 'was already used.'
