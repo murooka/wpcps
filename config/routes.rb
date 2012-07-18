@@ -1,6 +1,15 @@
 Wpcps::Application.routes.draw do
 
-  resources :users
+  resources :contests
+
+  resources :users do
+    collection do
+      get 'login'
+      get 'register'
+      post 'authorize'
+      post 'logout'
+    end
+  end
 
   root to: 'users#index'
 
