@@ -5,6 +5,7 @@ class User
 
   field :name, type: String
   key :name
+  field :aoj_id, type: String
   field :email, type: String
   field :encrypted_password, type: String
   field :salt, type: String
