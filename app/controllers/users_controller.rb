@@ -50,6 +50,15 @@ class UsersController < ApplicationController
     @user.salt = salt
     @user.encrypted_password = encrypted_password
 
+    # TODO
+    # validationはmodelに書く
+    aoj_id = params[:user][:aoj_id]
+    aoj_user = AOJ::User.new(aoj_id)
+    if not aoj_user.valid?
+      @user.errors[:aoj_id] << 'is not valid account'
+      render action: 'new' and return
+    end
+
     respond_to do |format|
       if @user.save
         login_user(@user)
