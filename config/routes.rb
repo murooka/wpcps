@@ -1,5 +1,9 @@
 Wpcps::Application.routes.draw do
 
+  namespace :ajax do
+    get 'valid_aoj_id'
+  end
+
   resources :contests
 
   resources :users do

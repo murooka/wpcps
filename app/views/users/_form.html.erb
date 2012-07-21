@@ -1,3 +1,22 @@
+<script type="text/javascript">
+  $(function() {
+      $("#user_aoj_id").keyup(function() {
+        $.get(
+          '<%= ajax_valid_aoj_id_path %>',
+          {aoj_id: $("#user_aoj_id").val()},
+          function(data) {
+            if (data['status']=='ok') {
+              $("#user_aoj_id_block").attr("class", "control-group success");
+              $("#user_aoj_id_block span.help-inline").text("OK");
+            } else {
+              $("#user_aoj_id_block").attr("class", "control-group error");
+              $("#user_aoj_id_block span.help-inline").text("NG");
+            }
+          });
+      });
+  });
+</script>
+
 <%= form_for @user, :html=>{:class=>'well'} do |f| %>
   <% if @user.errors.any? %>
     <div class="alert alert-error">
@@ -13,8 +32,10 @@
 
   <%= f.label :name %>
   <%= f.text_field :name %>
-  <%= f.label :aoj_id, 'AOJ ID' %>
-  <%= f.text_field :aoj_id %>
+  <div id="user_aoj_id_block" class="control-group">
+    <%= f.label :aoj_id, 'AOJ ID' %>
+    <%= f.text_field :aoj_id %><span class="help-inline"></span>
+  </div>
   <%= f.label :email %>
   <%= f.text_field :email %>
   <%= label_tag :password %>
