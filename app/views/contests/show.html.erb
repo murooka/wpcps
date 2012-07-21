@@ -1,9 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @contest.title %>
-</p>
+<dl class="dl-horizontal">
+  <dt>Title</dt>
+  <dd><%= @contest.title %></dd>
+  <dt>Begin Date</dt>
+  <dd><%= @contest.begin_date.strftime('%Y-%m-%d %H:%M') %></dd>
+  <dt>End Date</dt>
+  <dd><%= @contest.end_date.strftime('%Y-%m-%d %H:%M') %></dd>
+  <dt>Problems</dt>
+  <% for problem in @contest.problems %>
+    <dd><%= "id:#{problem.number.to_s}, score:#{problem.score.to_s}" %></dd>
+  <% end %>
+</dl>
 
 
 <%= link_to 'Edit', edit_contest_path(@contest) %> |
