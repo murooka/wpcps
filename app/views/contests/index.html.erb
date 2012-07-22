@@ -6,17 +6,17 @@
     <th>Title</th>
     <th>Begin Date</th>
     <th>End Date</th>
-    <th></th>
+    <th>Problems</th>
     <th></th>
     <th></th>
   </tr>
 
 <% @contests.each do |contest| %>
   <tr>
-    <td><%= contest.title %></td>
+    <td><%= link_to contest.title, contest %></td>
     <td><%= contest.begin_date.strftime('%Y-%m-%d %H:%M') %></td>
     <td><%= contest.end_date.strftime('%Y-%m-%d %H:%M') %></td>
-    <td><%= link_to 'Show', contest %></td>
+    <td><%= contest.problems.size %></td>
     <td><%= link_to 'Edit', edit_contest_path(contest) %></td>
     <td><%= link_to 'Destroy', contest, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>

@@ -1,18 +1,62 @@
+<h1><%= @contest.title %></h1>
+
 <p id="notice"><%= notice %></p>
 
-<dl class="dl-horizontal">
-  <dt>Title</dt>
-  <dd><%= @contest.title %></dd>
-  <dt>Begin Date</dt>
-  <dd><%= @contest.begin_date.strftime('%Y-%m-%d %H:%M') %></dd>
-  <dt>End Date</dt>
-  <dd><%= @contest.end_date.strftime('%Y-%m-%d %H:%M') %></dd>
-  <dt>Problems</dt>
-  <% for problem in @contest.problems %>
-    <dd><%= "id:#{problem.number.to_s}, score:#{problem.score.to_s}" %></dd>
-  <% end %>
-</dl>
+<h3>Schedule</h3>
+<%= @contest.begin_date_str %> - <%= @contest.end_date_str %>
 
+<br />
+<br />
+
+<h3>Status</h3>
+On contest<br />
+<% if @participated %>
+  You are participated.
+  <br />
+  <br />
+<% else %>
+  <%= form_tag action: 'participate' do %>
+    <%= submit_tag 'Participate!', class: 'btn btn-success' %>
+  <% end %>
+<% end %>
+
+
+<h3>Result</h3>
+<%= link_to 'here', result_contest_path(@contest) %>
+
+<br />
+<br />
+
+<h3>Participants</h3>
+  <% for user in @contest.participants %>
+    <%= user.name %><br />
+  <% end %>
+
+<br />
+<br />
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Score</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% for problem in @contest.problems %>
+      <tr>
+        <td><%= link_to problem.number_str, 'http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id='+problem.number_str %></td>
+        <td><%= link_to problem.name, 'http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id='+problem.number_str %></td>
+        <td><%= problem.score %></td>
+        <td>problem page</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
 
 <%= link_to 'Edit', edit_contest_path(@contest) %> |
-<%= link_to 'Back', contests_path %>

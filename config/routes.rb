@@ -2,9 +2,15 @@ Wpcps::Application.routes.draw do
 
   namespace :ajax do
     get 'valid_aoj_id'
+    get 'problem_name'
   end
 
-  resources :contests
+  resources :contests do
+    member do
+      get 'result'
+      post 'participate'
+    end
+  end
 
   resources :users do
     collection do

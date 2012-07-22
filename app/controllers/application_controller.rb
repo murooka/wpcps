@@ -1,3 +1,6 @@
+require 'date'
+require 'time'
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :current_user
@@ -37,6 +40,17 @@ class ApplicationController < ActionController::Base
     unless @current_user && @current_user.is_admin
       redirect_to controller: 'top', action: 'index'
     end
+  end
+
+end
+
+class DateTime
+  def self.from_aoj_time(time)
+    DateTime.parse(Time.at(time/1000).to_s)
+  end
+
+  def to_aoj_time
+    Time.parse(self.to_s).to_i * 1000
   end
 
 end

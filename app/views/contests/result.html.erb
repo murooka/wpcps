@@ -1,0 +1,35 @@
+<h1><%= @contest.title %></h1>
+
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <td class="center">Rank</td>
+      <td class="center">User</td>
+      <% for problem in @contest.problems %>
+        <td class="center"><%= problem.name %></td>
+      <% end %>
+      <td class="center">Total</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @result_table.each_with_index do |row,i| %>
+      <tr>
+        <td class="center"><%= i+1 %></td>
+        <td class="center"><%= row[:user].name %></td>
+        <% for status in row[:status] %>
+          <td class="center">
+            <span><%= status[:score] %></span><br />
+            <span><%= status[:time] %></span>
+          </td>
+        <% end %>
+        <td class="center">
+          <span><%= row[:total][:score] %></span><br />
+          <span><%= row[:total][:time] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />

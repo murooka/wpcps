@@ -1,6 +1,6 @@
 <script type="text/javascript">
   $(function() {
-      $("#user_aoj_id").keyup(function() {
+      $("#user_aoj_id").change(function() {
         $.get(
           '<%= ajax_valid_aoj_id_path %>',
           {aoj_id: $("#user_aoj_id").val()},

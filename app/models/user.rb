@@ -11,6 +11,8 @@ class User
   field :salt, type: String
   field :is_admin, type: Boolean, default: false
 
+  has_and_belongs_to_many :contests
+
   validates_uniqueness_of :name, :message => 'was already taken.'
   validates_uniqueness_of :email, :message => 'was already used.'
 

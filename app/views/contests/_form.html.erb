@@ -1,5 +1,6 @@
 <script type="text/javascript">
   $(function() {
+
     var settings = {
       dateFormat: 'yy-mm-dd',
       timeFormat: 'hh:mm',
@@ -8,14 +9,32 @@
     $("#begin_date").datetimepicker(settings);
     $("#end_date").datetimepicker(settings);
 
+
+    function setAjaxToProblem(i) {
+      $("#problem_id_"+i).change(function() {
+        $.get(
+          '<%= ajax_problem_name_path %>',
+          {problem_id: $("#problem_id_"+i).val()},
+          function(data) {
+            $("#problem_name_"+i).text(data.name);
+          }
+        );
+      });
+    }
+
+    for (var i=0; i<<%= @problem_count %>; i++) {
+      setAjaxToProblem(i);
+    }
+
+
     $("#problem_add_btn").click(function() {
       var len = $("#problem_rows tr").length;
       var target = $("#problem_rows tr:last");
-      var nid = len + 1;
-      target.clone().insertAfter(target).attr('id', 'problem_'+nid);
-      $('#problem_'+nid+' td:nth-child(1)>input').attr('id', 'problem_id_'+nid);
-      $('#problem_'+nid+' td:nth-child(2)>span').attr('id', 'problem_name_'+nid);
-      $('#problem_'+nid+' td:nth-child(3)>input').attr('id', 'problem_score_'+nid);
+      target.clone().insertAfter(target).attr('id', 'problem_'+len);
+      $('#problem_'+len+' td:nth-child(1)>input').attr('id', 'problem_id_'+len);
+      $('#problem_'+len+' td:nth-child(2)>span').attr('id', 'problem_name_'+len);
+      $('#problem_'+len+' td:nth-child(3)>input').attr('id', 'problem_score_'+len);
+      setAjaxToProblem(len);
     });
 
     $("#problem_remove_btn").click(function() {
@@ -61,11 +80,11 @@
       </thead>
 
       <tbody id="problem_rows">
-        <% for i in 1..4 %>
+        <% @problem_count.times do |i| %>
           <tr id="problem_<%= i %>">
-            <td><input type="text" id="problem_id_<%= i %>" class="span1" name="problem_id_<%= i %>" /></td>
-            <td><span class="span4" id="problem_name_<%= i %>"><% for j in 1..20 %>&nbsp;<% end %></span></td>
-            <td><input type="text" id="problem_score_<%= i %>" class="span1" name="problem_score_<%= i %>" /></td>
+            <td><input type="text" id="problem_id_<%= i %>" class="span1" name="problems[<%= i %>[number]]" /></td>
+            <td><span class="span4" id="problem_name_<%= i %>"><% for j in 1..30 %>&nbsp;<% end %></span></td>
+            <td><input type="text" id="problem_score_<%= i %>" class="span1" name="problems[<%= i %>[score]]" /></td>
           </tr>
         <% end %>
       </tbody>
