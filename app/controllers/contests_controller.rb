@@ -168,7 +168,12 @@ class ContestsController < AuthController
       {user: user, status: status, total: {score: total_score, time: sprintf('%02d:%02d', total_time/60, total_time%60)}}
     end
 
-    @result_table.sort_by! {|v| v[:total][:score] }
+    @result_table.sort do |l,r|
+      res = r[:total][:score] - l[:total][:score]
+      res = l[:total][:time][0..1].to_i - r[:total][:time][0..1].to_i if res==0
+      res = l[:total][:time][3..4].to_i - r[:total][:time][3..4].to_i if res==0
+      res
+    end
 
     # sample
     # @result_table = [
