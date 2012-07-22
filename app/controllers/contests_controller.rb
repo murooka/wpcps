@@ -168,6 +168,8 @@ class ContestsController < AuthController
       {user: user, status: status, total: {score: total_score, time: sprintf('%02d:%02d', total_time/60, total_time%60)}}
     end
 
+    @result_table.sort_by! {|v| v[:total][:score] }
+
     # sample
     # @result_table = [
     #   {user: @current_user, status: [{score: 15, time: '07:32'}, {score: 33, time: '11:56'}] , total: {score: 48, time: '11:56'} },
