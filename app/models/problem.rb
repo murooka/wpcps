@@ -6,6 +6,8 @@ class Problem
   field :score, :type => Integer
   field :name, :type => String
 
+
+  has_many :submissions
   belongs_to :contest
 
   validates_numericality_of :number, greater_than_or_equal_to: 0

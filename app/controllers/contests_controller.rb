@@ -19,6 +19,11 @@ class ContestsController < AuthController
 
     @participated = @contest.participants.include? @current_user
 
+    current = DateTime.now
+    @state = @contest.begin_date > current ? Contest::STATE_BEFORE
+                                           : @contest.end_date > current ? Contest::STATE_CURRENT
+                                                                         : Contest::STATE_AFTER
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @contest }
@@ -135,12 +140,24 @@ class ContestsController < AuthController
       total_score = 0
       total_time = 0
       status = @contest.problems.map do |prob|
+        submission = user.submissions.where(problem_id: prob.id).first
+        unless submission.nil?
+          t = (submission.date.to_aoj_time - @contest.begin_date.to_aoj_time) / 1000
+          time = sprintf('%02d:%02d', t/60, t%60)
+          score = prob.score
+          total_score += score
+          total_time = t if t>total_time
+          next {score: score, time: time}
+        end
+
         record = AOJ::Record.new(user.name, prob.number_str, @contest.begin_date.to_aoj_time, @contest.end_date.to_aoj_time)
         if record.valid?
           t = (record.solved.date.to_i - @contest.begin_date.to_aoj_time) / 1000
           time = sprintf('%02d:%02d', t/60, t%60)
           score = prob.score
           total_time = t if t>total_time
+
+          user.solve(prob, DateTime.from_aoj_time(record.solved.date.to_i))
         else
           score = 0
           time = '--:--'

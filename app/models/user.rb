@@ -12,6 +12,7 @@ class User
   field :is_admin, type: Boolean, default: false
 
   has_and_belongs_to_many :contests
+  has_many :submissions
 
   validates_uniqueness_of :name, :message => 'was already taken.'
   validates_uniqueness_of :email, :message => 'was already used.'
@@ -27,5 +28,19 @@ class User
     user
   end
 
+  def solve(problem, date)
+    submission = Submission.new({
+      date: date,
+      user: self,
+      problem: problem,
+    })
+    submission.save
+
+    self.submissions << submission
+    self.save
+
+    problem.submissions << submission
+    problem.save
+  end
 
 end

@@ -9,6 +9,10 @@ class Contest
   has_and_belongs_to_many :participants, class_name: "User"
   has_many :problems, autosave: true
 
+  STATE_BEFORE  = 1
+  STATE_CURRENT = 2
+  STATE_AFTER   = 3
+
   def begin_date_str=(str)
     self.errors[:begin_date] << 'is empty' and return if str.blank?
 

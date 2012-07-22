@@ -9,7 +9,18 @@
 <br />
 
 <h3>Status</h3>
-On contest<br />
+<% case @state %>
+  <% when Contest::STATE_BEFORE %>
+    preparing contest.
+  <% when Contest::STATE_CURRENT %>
+    now on contest.
+  <% when Contest::STATE_AFTER %>
+    contest is over.
+  <% else %>
+    <span class="alert alert-error">invalid status.</span>
+<% end %>
+<br />
+
 <% if @participated %>
   You are participated.
   <br />
