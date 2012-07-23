@@ -79,7 +79,7 @@ class ContestsController < AuthController
     end
     @contest.problems = problems
 
-    @contest.errors[:problems] << 'should have more than 0 problems.' if problems.size==0
+    @contest.errors[:problems] << 'are required more than 0.' if problems.size==0
 
 
     unless @contest.errors.empty?
