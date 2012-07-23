@@ -53,6 +53,7 @@ class ContestsController < AuthController
   # POST /contests.json
   def create
     @contest = Contest.new(params[:contest])
+    @problem_count = 4
 
     @contest.begin_date_str = params[:begin_date]
     @contest.end_date_str = params[:end_date]
@@ -78,7 +79,8 @@ class ContestsController < AuthController
     end
     @contest.problems = problems
 
-    @problem_count = 4
+    @contest.errors[:problems] << 'should have more than 0 problems.' if problems.size==0
+
 
     unless @contest.errors.empty?
       render action: 'new' and return
