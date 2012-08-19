@@ -25,7 +25,7 @@
   You are participated.
   <br />
   <br />
-<% else %>
+<% elsif @state==Contest::STATE_BEFORE || @state==Contest::STATE_CURRENT %>
   <%= form_tag action: 'participate' do %>
     <%= submit_tag 'Participate!', class: 'btn btn-success' %>
   <% end %>
