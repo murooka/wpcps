@@ -13,6 +13,8 @@ module AOJ
     def initialize(api_path, params)
       @api_path = api_path
       @xml = get_result(params)
+      puts '========== xml log =========='
+      puts @xml
       @fields = nil
     end
 
@@ -23,8 +25,6 @@ module AOJ
     end
 
     def xml_to_hash(xml)
-      puts '========== xml log =========='
-      puts xml
       hash = {}
       xml.elements.group_by(&:name).each do |k,v|
         hash[k.intern] = if v.size==1
