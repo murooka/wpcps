@@ -13,8 +13,6 @@ module AOJ
     def initialize(api_path, params)
       @api_path = api_path
       @xml = get_result(params)
-      puts '========== xml log =========='
-      puts @xml
       @fields = nil
     end
 
@@ -85,6 +83,8 @@ module AOJ
 
     def initialize(user_id, problem_id, date_begin, date_end)
       super('/solved_record', {user_id: user_id, problem_id: problem_id, date_begin: date_begin, date_end: date_end})
+      puts '========== api log =========='
+      puts user_id, problem_id
       define_fields('solved_record_list')
     end
 
